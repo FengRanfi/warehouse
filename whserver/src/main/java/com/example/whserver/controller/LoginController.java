@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -121,5 +122,12 @@ public class LoginController {
             return Result.err(Result.CODE_ERR_BUSINESS,"账号不存在");
         }
     }
-    
+
+    @RequestMapping("/curr-user")
+    public Result currentUser(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token)
+    {
+        CurrentUser currentUser=tokenUtils.getCurrentUser(token);
+        return Result.ok(currentUser);
+    }
+
 }
