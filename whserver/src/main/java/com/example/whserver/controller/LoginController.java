@@ -138,4 +138,12 @@ public class LoginController {
         List<Auth> authTreeList=authService.authTreeByUid(userId);
         return Result.ok(authTreeList);
     }
+
+    @RequestMapping("/logout")
+    public Result logout(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token)
+    {
+        stringRedisTemplate.delete(token);
+        return Result.ok("退出系统");
+    }
+
 }
