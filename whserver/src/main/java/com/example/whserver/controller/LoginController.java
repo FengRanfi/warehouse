@@ -1,9 +1,7 @@
 package com.example.whserver.controller;
 
-import com.example.whserver.entity.CurrentUser;
-import com.example.whserver.entity.LoginUser;
-import com.example.whserver.entity.Result;
-import com.example.whserver.entity.User;
+import com.example.whserver.entity.*;
+import com.example.whserver.service.AuthService;
 import com.example.whserver.service.UserService;
 import com.example.whserver.utils.DigestUtil;
 import com.example.whserver.utils.TokenUtils;
@@ -25,6 +23,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -129,5 +128,14 @@ public class LoginController {
         CurrentUser currentUser=tokenUtils.getCurrentUser(token);
         return Result.ok(currentUser);
     }
-
+    @Autowired
+    private AuthService authService;
+    @RequestMapping("/user/auth-list")
+    public Result loadAuthTree(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token)
+    {
+        CurrentUser currentUser=tokenUtils.getCurrentUser(token);
+        int userId =currentUser.getUserId();
+        List<Auth> authTreeList=authService.authTreeByUid(userId);
+        return Result.ok(authTreeList);
+    }
 }
