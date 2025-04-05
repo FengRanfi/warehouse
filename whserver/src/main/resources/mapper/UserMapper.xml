@@ -56,4 +56,12 @@
         order by t1.create_time desc
         limit #{page.limitIndex},#{page.pageSize}
     </select>
+
+    <insert id="insertUser">
+        insert into user_info values (null,#{userCode},#{userName},#{userPwd},null,0,0,#{createBy},now(),null,null)
+    </insert>
+
+    <update id="setStateByUid">
+        update user_info set user_state=#{param2} where user_id=#{param1}
+    </update>
 </mapper>

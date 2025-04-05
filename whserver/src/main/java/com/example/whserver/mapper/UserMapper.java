@@ -16,4 +16,8 @@ public interface UserMapper {
     public Integer findUserRowCount(User user);
     //分页查询用户的方法
     public List<User> findUserByPage(@Param("page")Page page,@Param("user")User user);
+    //add user
+    public int insertUser(User user);
+    //根据用户id该用户状态的方法
+    public int setStateByUid(Integer userId,String userState);
 }
